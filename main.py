@@ -29,53 +29,24 @@ pattern={"type": "VerifiablePresentationRequest",
                     "credentialQuery": []
                 }]
             }
-patternOver13 = {"type": "VerifiablePresentationRequest",
+patternSpec = {"type": "VerifiablePresentationRequest",
             "query": [
                 {
                     "type": "QueryByExample",
                     "credentialQuery": [{
                     "required": True,
                     "example": {
-                        "type": "Over13",
+                        "type": "",
                     }
                 }]
                 }]
             }
-patternOver18 = {"type": "VerifiablePresentationRequest",
-            "query": [
-                {
-                    "type": "QueryByExample",
-                    "credentialQuery": [{
-                    "required": True,
-                    "example": {
-                        "type": "Over18"
-                    }
-                }]
-                }]
-            }           
-patternBloometa = {"type": "VerifiablePresentationRequest",
-            "query": [
-                {
-                    "type": "QueryByExample",
-                    "credentialQuery": [{
-                    "required": True,
-                    "example": {
-                        "type": "BloometaPass"
-                    }
-                }]
-                }]
-            }
-@app.route('/bot-verifier/init/<type>')
-def verifier_init(type):
-    id = str(uuid.uuid1())
-    patternToSend=pattern
-    if type=="over13":
-            patternToSend=patternOver13
-    elif type=="over18":
-            patternToSend=patternOver18
-    elif type=="bloometa":
-            patternToSend=patternBloometa
 
+@app.route('/bot-verifier/init/<typeP>')
+def verifier_init(typeP):
+    id = str(uuid.uuid1())
+    patternToSend=patternSpec
+    patternToSend["query"][0]["credentialQuery"][0]["example"]["type"]=typeP
     patternToSend['challenge'] = str(uuid.uuid1()) # nonce
     """IP=extract_ip()
     patternToSend['domain'] = 'http://' + IP"""
