@@ -22,24 +22,67 @@ mode = environment.currentMode(myenv)
 red= redis.Redis(host='127.0.0.1', port=6379, db=0)
 
 did_verifier = 'did:tz:tz2NQkPq3FFA3zGAyG8kLcWatGbeXpHMu7yk'
-pattern = {"type": "VerifiablePresentationRequest",
+pattern={"type": "VerifiablePresentationRequest",
             "query": [
                 {
                     "type": "QueryByExample",
                     "credentialQuery": []
                 }]
             }
-
-@app.route('/bot-verifier/init')
-def verifier_init():
+patternOver13 = {"type": "VerifiablePresentationRequest",
+            "query": [
+                {
+                    "type": "QueryByExample",
+                    "credentialQuery": [{
+                    "required": True,
+                    "example": {
+                        "type": "Over13",
+                    }
+                }]
+                }]
+            }
+patternOver18 = {"type": "VerifiablePresentationRequest",
+            "query": [
+                {
+                    "type": "QueryByExample",
+                    "credentialQuery": [{
+                    "required": True,
+                    "example": {
+                        "type": "Over18"
+                    }
+                }]
+                }]
+            }           
+patternBloometa = {"type": "VerifiablePresentationRequest",
+            "query": [
+                {
+                    "type": "QueryByExample",
+                    "credentialQuery": [{
+                    "required": True,
+                    "example": {
+                        "type": "BloometaPass"
+                    }
+                }]
+                }]
+            }
+@app.route('/bot-verifier/init/<type>')
+def verifier_init(type):
     id = str(uuid.uuid1())
-    pattern['challenge'] = str(uuid.uuid1()) # nonce
+    patternToSend=pattern
+    if type=="over13":
+            patternToSend=patternOver13
+    elif type=="over18":
+            patternToSend=patternOver18
+    elif type=="bloometa":
+            patternToSend=patternBloometa
+
+    patternToSend['challenge'] = str(uuid.uuid1()) # nonce
     """IP=extract_ip()
-    pattern['domain'] = 'http://' + IP"""
-    pattern['domain']="https://d8fa-86-229-94-232.eu.ngrok.io"
+    patternToSend['domain'] = 'http://' + IP"""
+    patternToSend['domain']="https://22f6-86-229-94-232.eu.ngrok.io"
     # l'idee ici est de créer un endpoint dynamique
-    red.set(id,  json.dumps(pattern))
-    url = 'https://d8fa-86-229-94-232.eu.ngrok.io/bot-verifier/endpoint/' + id +'?issuer=' + did_verifier
+    red.set(id,  json.dumps(patternToSend))
+    url = 'https://22f6-86-229-94-232.eu.ngrok.io/bot-verifier/endpoint/' + id +'?issuer=' + did_verifier
     return jsonify({"url":url,"id":id}),200
 
 
@@ -84,12 +127,20 @@ def presentation_endpoint(id, red):
         # mettre les tests pour verifier la cohérence entre issuer, holder et credentialSubject.id 
         # 
         red.set(id,  request.form['presentation'])
+        presentation=request.form['presentation']
+        print(type(presentation))
+        #credential = json.dumps(presentation, indent=4, ensure_ascii=False)
+        #presentation = json.dumps(presentation, indent=4, ensure_ascii=False)
+        dictionnaire=json.loads(presentation)
+        #print(presentation)
+        print(type(dictionnaire))
+        typeCredential=dictionnaire["verifiableCredential"]["type"][1]
+        print("type credential : "+typeCredential)
         event_data = json.dumps({"id" : id,
                                 "message" : "presentation is verified",
-                                "check" : "ok"})           
+                                "check" : "ok","typeCredential":typeCredential})           
         red.publish('verifier', event_data)
         
-        #return redirect("/")
         return jsonify("ok"), 200
 
 # server event push, peut etre remplacé par websocket

@@ -1,0 +1,192 @@
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+    ],
+    "id": "urn:uuid:2f6d091d-8886-4364-b414-43ba375f7553",
+    "type": [
+        "VerifiablePresentation"
+    ],
+    "verifiableCredential": {
+        "@context": [
+            "https://www.w3.org/2018/credentials/v1",
+            {
+                "WalletLink": {
+                    "@context": {
+                        "@protected": true,
+                        "@version": 1.1,
+                        "cryptoWalletPayload": "https://github.com/TalaoDAO/context#cryptowalletpayload",
+                        "cryptoWalletSignature": "https://github.com/TalaoDAO/context#cryptowalletsignature",
+                        "id": "@id",
+                        "type": "@type",
+                        "verifier": {
+                            "@id": "https://www.w3.org/2018/credentials#issuer",
+                            "@type": "@id"
+                        }
+                    },
+                    "@id": "https://github.com/TalaoDAO/contex#walletlink"
+                },
+                "TezosPooAddress": {
+                    "@context": {
+                        "@protected": true,
+                        "@version": 1.1,
+                        "accountName": "https://github.com/TalaoDAO/context#accountname",
+                        "associatedAddress": "https://w3id.org/security#blockchainAccountId",
+                        "id": "@id",
+                        "issuedBy": {
+                            "@context": {
+                                "@protected": true,
+                                "@version": 1.1,
+                                "name": "https://schema.org/legalName"
+                            },
+                            "@id": "https://schema.org/issuedBy"
+                        },
+                        "type": "@type"
+                    },
+                    "@id": "https://github.com/TalaoDAO/context#tezospooaddress"
+                }
+            }
+        ],
+        "id": "urn:uuid:14ca339e-b289-11ed-9ec4-0a1628958560",
+        "type": [
+            "VerifiableCredential",
+            "TezosPooAddress",
+            "WalletLink"
+        ],
+        "credentialSubject": {
+            "id": "did:key:z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc",
+            "accountName": "Temple Wallet",
+            "type": "TezosPooAddress",
+            "associatedAddress": "tz1dKQdvAEqLJgWbpZX9CZqQsd6it9hbETxz",
+            "issuedBy": {
+                "name": "Altme"
+            }
+        },
+        "issuer": "did:web:app.altme.io:issuer",
+        "issuanceDate": "2023-02-22T08:15:34Z",
+        "proof": {
+            "type": "Ed25519Signature2018",
+            "proofPurpose": "assertionMethod",
+            "verificationMethod": "did:web:app.altme.io:issuer#key-1",
+            "created": "2023-02-22T08:15:34.756Z",
+            "jws": "eyJhbGciOiJFZERTQSIsImNyaXQiOlsiYjY0Il0sImI2NCI6ZmFsc2V9..rPZVZVlz6uCUKe-oXAcDxLlOdnYjFYlpieIbeaGRmffWmAdJ2-daBBIQiJm2AxQefv1W4ArZDx67Zf57Mg3kCA"
+        },
+        "expirationDate": "2024-02-22T08:15:34.741255Z",
+        "evidence": [
+            {
+                "id": "https://github.com/TalaoDAO/context#evidence",
+                "type": [
+                    "WalletLink"
+                ],
+                "verifier": "did:web:app.altme.io:issuer",
+                "cryptoWalletSignature": "edsigtwq2uZ2nC6qs6DfAZwhwBWTLgrv1ScdLhcS8pKSFFcBZ6rSbFoxUV2aZ5TGSvAJeq9cAx2FnfmjjdWLfzfEXDDzkrtqUcE",
+                "cryptoWalletPayload": "Verify address owning for Altme : 164463"
+            }
+        ]
+    },
+    "proof": {
+        "type": "Ed25519Signature2018",
+        "proofPurpose": "authentication",
+        "challenge": "df761101-c246-11ed-a4a2-5f212c80d8ff",
+        "verificationMethod": "did:key:z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc#z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc",
+        "created": "2023-03-14T09:02:03.573Z",
+        "domain": "https://ff65-86-229-94-232.eu.ngrok.io",
+        "jws": "eyJhbGciOiJFZERTQSIsImNyaXQiOlsiYjY0Il0sImI2NCI6ZmFsc2V9..gBygLgGmyDmw63_wAJ5eUhftOnBLf0m0VVbx7e5IFRaYYLJm988b99PUS5Vgp5rI4BsQJj1oJrEEnTeLZgGDCw"
+    },
+    "holder": "did:key:z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc"
+}
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+    ],
+    "id": "urn:uuid:c3893287-3c23-4bfd-bd53-7aada6fb8094",
+    "type": [
+        "VerifiablePresentation"
+    ],
+    "verifiableCredential": {
+        "@context": [
+            "https://www.w3.org/2018/credentials/v1",
+            {
+                "TezosPooAddress": {
+                    "@context": {
+                        "@protected": true,
+                        "@version": 1.1,
+                        "accountName": "https://github.com/TalaoDAO/context#accountname",
+                        "associatedAddress": "https://w3id.org/security#blockchainAccountId",
+                        "id": "@id",
+                        "issuedBy": {
+                            "@context": {
+                                "@protected": true,
+                                "@version": 1.1,
+                                "name": "https://schema.org/legalName"
+                            },
+                            "@id": "https://schema.org/issuedBy"
+                        },
+                        "type": "@type"
+                    },
+                    "@id": "https://github.com/TalaoDAO/context#tezospooaddress"
+                },
+                "WalletLink": {
+                    "@context": {
+                        "@protected": true,
+                        "@version": 1.1,
+                        "cryptoWalletPayload": "https://github.com/TalaoDAO/context#cryptowalletpayload",
+                        "cryptoWalletSignature": "https://github.com/TalaoDAO/context#cryptowalletsignature",
+                        "id": "@id",
+                        "type": "@type",
+                        "verifier": {
+                            "@id": "https://www.w3.org/2018/credentials#issuer",
+                            "@type": "@id"
+                        }
+                    },
+                    "@id": "https://github.com/TalaoDAO/contex#walletlink"
+                }
+            }
+        ],
+        "id": "urn:uuid:14ca339e-b289-11ed-9ec4-0a1628958560",
+        "type": [
+            "VerifiableCredential",
+            "TezosPooAddress",
+            "WalletLink"
+        ],
+        "credentialSubject": {
+            "id": "did:key:z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc",
+            "issuedBy": {
+                "name": "Altme"
+            },
+            "type": "TezosPooAddress",
+            "accountName": "Temple Wallet",
+            "associatedAddress": "tz1dKQdvAEqLJgWbpZX9CZqQsd6it9hbETxz"
+        },
+        "issuer": "did:web:app.altme.io:issuer",
+        "issuanceDate": "2023-02-22T08:15:34Z",
+        "proof": {
+            "type": "Ed25519Signature2018",
+            "proofPurpose": "assertionMethod",
+            "verificationMethod": "did:web:app.altme.io:issuer#key-1",
+            "created": "2023-02-22T08:15:34.756Z",
+            "jws": "eyJhbGciOiJFZERTQSIsImNyaXQiOlsiYjY0Il0sImI2NCI6ZmFsc2V9..rPZVZVlz6uCUKe-oXAcDxLlOdnYjFYlpieIbeaGRmffWmAdJ2-daBBIQiJm2AxQefv1W4ArZDx67Zf57Mg3kCA"
+        },
+        "expirationDate": "2024-02-22T08:15:34.741255Z",
+        "evidence": [
+            {
+                "id": "https://github.com/TalaoDAO/context#evidence",
+                "type": [
+                    "WalletLink"
+                ],
+                "cryptoWalletPayload": "Verify address owning for Altme : 164463",
+                "verifier": "did:web:app.altme.io:issuer",
+                "cryptoWalletSignature": "edsigtwq2uZ2nC6qs6DfAZwhwBWTLgrv1ScdLhcS8pKSFFcBZ6rSbFoxUV2aZ5TGSvAJeq9cAx2FnfmjjdWLfzfEXDDzkrtqUcE"
+            }
+        ]
+    },
+    "proof": {
+        "type": "Ed25519Signature2018",
+        "proofPurpose": "authentication",
+        "challenge": "6869fb35-c247-11ed-a4a2-5f212c80d8ff",
+        "verificationMethod": "did:key:z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc#z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc",
+        "created": "2023-03-14T09:05:53.373Z",
+        "domain": "https://ff65-86-229-94-232.eu.ngrok.io",
+        "jws": "eyJhbGciOiJFZERTQSIsImNyaXQiOlsiYjY0Il0sImI2NCI6ZmFsc2V9..i42rtNY68tG6aLyGEsldiCi9lbm0Zd7BjaXMnbJxWHU21qDFqxMkDmm4evhIRydzTrqDxt9W7UnLz_Gw_qeUBQ"
+    },
+    "holder": "did:key:z6MknjAYAMi8vPr4jb6iQB8UPQachJW3nDJktrEPkd7hi8pc"
+}
