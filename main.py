@@ -41,19 +41,33 @@ patternSpec = {"type": "VerifiablePresentationRequest",
                 }]
                 }]
             }
-
+patternNationality={"type": "VerifiablePresentationRequest",
+            "query": [
+                {
+                    "type": "QueryByExample",
+                    "credentialQuery": [{
+                    "required": True,
+                    "example": {
+                        "type": "Nationality",
+                    }
+                }]
+                }]
+            }
 @app.route('/bot-verifier/init/<typeP>')
 def verifier_init(typeP):
     id = str(uuid.uuid1())
-    patternToSend=patternSpec
-    patternToSend["query"][0]["credentialQuery"][0]["example"]["type"]=typeP
+    if typeP=="fr" or typeP=="en":
+        patternToSend=patternNationality
+    else:
+        patternToSend=patternSpec
+        patternToSend["query"][0]["credentialQuery"][0]["example"]["type"]=typeP
     patternToSend['challenge'] = str(uuid.uuid1()) # nonce
     """IP=extract_ip()
     patternToSend['domain'] = 'http://' + IP"""
-    patternToSend['domain']="https://22f6-86-229-94-232.eu.ngrok.io"
+    patternToSend['domain']="https://0271-86-229-94-232.eu.ngrok.io"
     # l'idee ici est de créer un endpoint dynamique
     red.set(id,  json.dumps(patternToSend))
-    url = 'https://22f6-86-229-94-232.eu.ngrok.io/bot-verifier/endpoint/' + id +'?issuer=' + did_verifier
+    url = 'https://0271-86-229-94-232.eu.ngrok.io/bot-verifier/endpoint/' + id +'?issuer=' + did_verifier
     return jsonify({"url":url,"id":id}),200
 
 
@@ -109,7 +123,8 @@ def presentation_endpoint(id, red):
         print("type credential : "+typeCredential)
         event_data = json.dumps({"id" : id,
                                 "message" : "presentation is verified",
-                                "check" : "ok","typeCredential":typeCredential})           
+                                "check" : "ok","typeCredential":typeCredential,
+                                    "presentation":request.form['presentation']})           
         red.publish('verifier', event_data)
         
         return jsonify("ok"), 200
