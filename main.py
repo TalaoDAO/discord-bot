@@ -126,5 +126,5 @@ def presentation_stream(red):
                 "X-Accel-Buffering" : "no"}
     return Response(event_stream(red), headers=headers)
 
-
-app.run( host = mode.IP, port= mode.port, debug =True)
+if __name__ == '__main__':
+    app.run( host = mode.IP, port= mode.port, debug =True)
