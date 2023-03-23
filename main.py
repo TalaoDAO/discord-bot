@@ -65,7 +65,7 @@ def verifier_init(typeP):
         patternToSend["query"][0]["credentialQuery"][0]["example"]["type"]=typeP
     patternToSend['challenge'] = str(uuid.uuid1()) # nonce
     patternToSend['domain']=mode.server
-    red.setex(id,  json.dumps(patternToSend))
+    red.setex(id,180,  json.dumps(patternToSend))
     url = mode.server+'discord-bot/endpoint/' + id +'?issuer=' + did_verifier
     return jsonify({"url":url,"id":id}),200
 
@@ -100,7 +100,7 @@ def presentation_endpoint(id, red):
                                     "message" : result})
             red.publish('verifier', event_data)
             return jsonify(result), 403
-        red.setex(id,  request.form['presentation'])
+        red.setex(id,180,  request.form['presentation'])
         presentation=request.form['presentation']
         dictionnaire=json.loads(presentation)
         typeCredential=dictionnaire["verifiableCredential"]["type"][1]
