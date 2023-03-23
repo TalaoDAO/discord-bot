@@ -127,4 +127,4 @@ def presentation_stream(red):
     return Response(event_stream(red), headers=headers)
 
 
-app.run(host = "localhost", port= 3000, debug=True)
+app.run( host = mode.IP, port= mode.port, debug =True)
