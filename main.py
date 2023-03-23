@@ -9,7 +9,7 @@ import environment
 
 
 app = Flask(__name__)
-app.secret_key json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
+app.secret_key=json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
 
 
 myenv = os.getenv('MYENV')
