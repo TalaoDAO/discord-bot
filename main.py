@@ -10,7 +10,7 @@ import environment
 
 app = Flask(__name__)
 app.secret_key=json.dumps(json.load(open("keys.json", "r"))["appSecretKey"])
-
+countries=json.load(open("countries.json", "r"))
 
 myenv = os.getenv('MYENV')
 if not myenv :
@@ -58,15 +58,29 @@ patternNationality={"type": "VerifiablePresentationRequest",
 @app.route('/discord-bot/init/<typeP>')
 def verifier_init(typeP):
     id = str(uuid.uuid1())
-    if typeP=="fr" or typeP=="en":
-        patternToSend=patternNationality
-    else:
+    url=""
+    if len(typeP)==2:
+        for country in countries:
+            if(country["alpha2Code"]):
+                patternToSend=patternNationality
+                url = mode.server+'discord-bot/endpoint/' + id +'?issuer=' + did_verifier+"&country="+typeP
+
+                break
+    elif len(typeP)==3:
+        for country in countries:
+            if(country["alpha3Code"]):
+                patternToSend=patternNationality
+                url = mode.server+'discord-bot/endpoint/' + id +'?issuer=' + did_verifier+"&country="+typeP
+
+                break
+    if patternToSend!=patternNationality:
         patternToSend=patternSpec
         patternToSend["query"][0]["credentialQuery"][0]["example"]["type"]=typeP
+        url = mode.server+'discord-bot/endpoint/' + id +'?issuer=' + did_verifier
+
     patternToSend['challenge'] = str(uuid.uuid1()) # nonce
     patternToSend['domain']=mode.server
     red.setex(id,180,  json.dumps(patternToSend))
-    url = mode.server+'discord-bot/endpoint/' + id +'?issuer=' + did_verifier
     return jsonify({"url":url,"id":id}),200
 
 
@@ -104,6 +118,15 @@ def presentation_endpoint(id, red):
         presentation=request.form['presentation']
         dictionnaire=json.loads(presentation)
         typeCredential=dictionnaire["verifiableCredential"]["type"][1]
+        if request.args["country"]:
+            if dictionnaire["verifiableCredential"]["credentialSubject"]["nationality"]!=request.args["country"]:
+                event_data = json.dumps({"id" : id,
+                                "message" : "country is wrong",
+                                "check" : "ko","typeCredential":typeCredential,
+                                    "presentation":request.form['presentation']}) 
+                red.publish('verifier', event_data)
+                return jsonify(result), 403     
+
         event_data = json.dumps({"id" : id,
                                 "message" : "presentation is verified",
                                 "check" : "ok","typeCredential":typeCredential,
