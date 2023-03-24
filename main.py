@@ -119,7 +119,7 @@ def presentation_endpoint(id, red):
         presentation=request.form['presentation']
         dictionnaire=json.loads(presentation)
         typeCredential=dictionnaire["verifiableCredential"]["type"][1]
-        if request.args["country"]:
+        try:
             if dictionnaire["verifiableCredential"]["credentialSubject"]["nationality"]!=request.args["country"]:
                 event_data = json.dumps({"id" : id,
                                 "message" : "country is wrong",
@@ -127,14 +127,14 @@ def presentation_endpoint(id, red):
                                     "presentation":request.form['presentation']}) 
                 red.publish('verifier', event_data)
                 return jsonify(result), 403     
-
-        event_data = json.dumps({"id" : id,
-                                "message" : "presentation is verified",
-                                "check" : "ok","typeCredential":typeCredential,
-                                    "presentation":request.form['presentation']})           
-        red.publish('verifier', event_data)
-        
-        return jsonify("ok"), 200
+        except:
+            event_data = json.dumps({"id" : id,
+                                    "message" : "presentation is verified",
+                                    "check" : "ok","typeCredential":typeCredential,
+                                        "presentation":request.form['presentation']})           
+            red.publish('verifier', event_data)
+            
+            return jsonify("ok"), 200
 
 
 @app.route('/discord-bot/verifier_stream', methods = ['GET'],  defaults={'red' : red})
