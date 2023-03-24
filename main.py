@@ -59,6 +59,7 @@ patternNationality={"type": "VerifiablePresentationRequest",
 def verifier_init(typeP):
     id = str(uuid.uuid1())
     url=""
+    patternToSend=pattern
     if len(typeP)==2:
         for country in countries:
             if(country["alpha2Code"]):
